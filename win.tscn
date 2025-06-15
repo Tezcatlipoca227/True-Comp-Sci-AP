@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://lxrm2lyjhum5"]
+
+[ext_resource type="Script" uid="uid://ctcd14isr25vo" path="res://scenes/win.gd" id="1_r4oei"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_afbyi"]
+radius = 7.0
+height = 24.0
+
+[node name="Win" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_r4oei")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_afbyi")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp1std76d3h0t"]
+
+[ext_resource type="Script" uid="uid://lr5m4sahtk1n" path="res://scenes/main.gd" id="1_o5qli"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_o5qli")
+
+[node name="Start" type="Button" parent="."]
+offset_left = 822.0
+offset_top = 137.0
+offset_right = 1084.0
+offset_bottom = 299.0
+text = "START"
+
+[node name="End" type="Button" parent="Start"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 214.0
+offset_right = 261.0
+offset_bottom = 376.0
+text = "END"
+
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Start/End" to="." method="_on_end_pressed"]

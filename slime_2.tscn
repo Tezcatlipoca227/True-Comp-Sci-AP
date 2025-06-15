@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://bj5gqqar70vro"]
+
+[ext_resource type="Texture2D" uid="uid://bl773gb3se2fe" path="res://assets/sprites/slime_purple.png" id="1_kib5p"]
+[ext_resource type="Script" uid="uid://d3kmdm7wdi2t7" path="res://scripts/slime_2.gd" id="1_kpkrp"]
+[ext_resource type="PackedScene" uid="uid://c0r0v1kn1onxk" path="res://scenes/killzone.tscn" id="2_kpkrp"]
+[ext_resource type="Script" uid="uid://crxonukhlvuf8" path="res://scenes/deathzone.gd" id="4_4jav0"]
+[ext_resource type="Script" uid="uid://je0gw5gh8p1u" path="res://scenes/killzone.gd" id="4_fnney"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jav0"]
+atlas = ExtResource("1_kib5p")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnney"]
+atlas = ExtResource("1_kib5p")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hunw"]
+atlas = ExtResource("1_kib5p")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6e4ud"]
+atlas = ExtResource("1_kib5p")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ih3nm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jav0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fnney")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hunw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6e4ud")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spjcn"]
+size = Vector2(7, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fnney"]
+size = Vector2(14, 5.5)
+
+[node name="Slime 2" type="Node2D"]
+script = ExtResource("1_kpkrp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_ih3nm")
+autoplay = "default"
+frame = 3
+frame_progress = 0.0934359
+
+[node name="Killzone" parent="." instance=ExtResource("2_kpkrp")]
+script = ExtResource("4_fnney")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(0.5, -4.5)
+shape = SubResource("RectangleShape2D_spjcn")
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+target_position = Vector2(10, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+target_position = Vector2(-10, 0)
+
+[node name="Deathzone" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("4_4jav0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deathzone"]
+position = Vector2(0, -13)
+shape = SubResource("RectangleShape2D_fnney")
+
+[connection signal="body_entered" from="Deathzone" to="." method="_on_deathzone_body_entered"]
+[connection signal="body_entered" from="Deathzone" to="Deathzone" method="_on_body_entered"]
